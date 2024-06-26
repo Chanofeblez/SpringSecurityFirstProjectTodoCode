@@ -33,12 +33,12 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .httpBasic(Customizer.withDefaults())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests( http -> {
+              /*  .authorizeHttpRequests( http -> {
                   //Endpoints
                   http.requestMatchers(HttpMethod.GET, "/holanoseg").permitAll();
                   http.requestMatchers(HttpMethod.GET, "/holaseg").hasAuthority("READ");
                   http.anyRequest().denyAll();
-                })
+                }) */
                 .build();
     }
 
@@ -48,10 +48,10 @@ public class SecurityConfig {
     }
 
     @Bean
-    public AuthenticationProvider authenticationProvider() {
+    public AuthenticationProvider authenticationProvider(UserDetailsService userDetailsService) {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
         provider.setPasswordEncoder(passwordEncoder());
-        provider.setUserDetailsService(userDetailsService());
+        provider.setUserDetailsService(userDetailsService);
         return provider;
     }
 
@@ -60,7 +60,7 @@ public class SecurityConfig {
         return NoOpPasswordEncoder.getInstance();
     }
 
-    @Bean
+    /*@Bean
     public UserDetailsService userDetailsService(){
         List userDetailsList = new ArrayList<>();
 
@@ -83,5 +83,5 @@ public class SecurityConfig {
                 .build());
 
         return new InMemoryUserDetailsManager(userDetailsList);
-    }
+    }*/
 }
