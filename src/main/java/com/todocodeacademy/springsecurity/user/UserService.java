@@ -1,6 +1,7 @@
 package com.todocodeacademy.springsecurity.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -39,6 +40,7 @@ public class UserService implements IUserService{
 
     @Override
     public String encriptPassword(String password) {
-        return null;
+
+        return new BCryptPasswordEncoder().encode(password);
     }
 }
